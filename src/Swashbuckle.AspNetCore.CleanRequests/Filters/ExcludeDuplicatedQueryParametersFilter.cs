@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.CleanRequests.Extensions;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Linq;
@@ -29,9 +30,7 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Filters
 
         public void Apply(OpenApiOperation operation, OperationFilterContext _)
         {
-            var parameters = operation.Parameters
-                .Where(parameter => _parameterLocations.Any(parameterLocation => parameter.In == parameterLocation))
-                .ToArray();
+            var parameters = operation.GetParametersWithLocation(_parameterLocations);
 
             if (parameters.Length <= 0) return;
 

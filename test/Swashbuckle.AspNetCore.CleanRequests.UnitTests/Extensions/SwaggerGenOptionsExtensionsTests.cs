@@ -47,4 +47,45 @@ public class SwaggerGenOptionsExtensionsTests
                 .All(location => parameterLocations.Contains(location))
         );
     }
+
+    [Fact]
+    public void ShouldAddExcludeDuplicatedBodyPropertiesFilterWithDefaultParameterLocation()
+    {
+        // Arrange
+        var options = new SwaggerGenOptions();
+
+        // Act
+        options.ExcludeDuplicatedBodyProperties();
+
+        // Assert
+        options.OperationFilterDescriptors.ShouldContain(descriptor =>
+            descriptor.Type == typeof(ExcludeDuplicatedBodyPropertiesFilter) &&
+            descriptor.Arguments.Length == 1 &&
+            ((ParameterLocation[])descriptor.Arguments[0])[0] == ParameterLocation.Path
+        );
+    }
+
+    [Fact]
+    public void ShouldAddExcludeDuplicatedBodyPropertiesFilterWithParameterLocations()
+    {
+        // Arrange
+        var parameterLocations = new[]
+        {
+            ParameterLocation.Path,
+            ParameterLocation.Cookie,
+            ParameterLocation.Header
+        };
+        var options = new SwaggerGenOptions();
+
+        // Act
+        options.ExcludeDuplicatedBodyProperties(parameterLocations);
+
+        // Assert
+        options.OperationFilterDescriptors.ShouldContain(descriptor =>
+            descriptor.Type == typeof(ExcludeDuplicatedBodyPropertiesFilter) &&
+            descriptor.Arguments.Length == 1 &&
+            ((ParameterLocation[])descriptor.Arguments[0])
+            .All(location => parameterLocations.Contains(location))
+        );
+    }
 }
