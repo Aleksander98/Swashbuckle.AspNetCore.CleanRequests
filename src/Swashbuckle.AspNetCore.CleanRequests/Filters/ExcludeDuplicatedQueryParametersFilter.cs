@@ -29,11 +29,11 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Filters
 
         public void Apply(OpenApiOperation operation, OperationFilterContext _)
         {
-            var pathParameters = operation.Parameters
+            var parameters = operation.Parameters
                 .Where(parameter => _parameterLocations.Any(parameterLocation => parameter.In == parameterLocation))
                 .ToArray();
 
-            if (pathParameters.Length <= 0) return;
+            if (parameters.Length <= 0) return;
 
             var queryParameters = operation.Parameters
                 .Where(parameter => parameter.In == ParameterLocation.Query)
@@ -41,7 +41,7 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Filters
 
             foreach (var queryParameter in queryParameters)
             {
-                if (pathParameters.Any(pathParameter => pathParameter.Name.Equals(queryParameter.Name, StringComparison.InvariantCultureIgnoreCase)))
+                if (parameters.Any(parameter => parameter.Name.Equals(queryParameter.Name, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     operation.Parameters.Remove(queryParameter);
                 }
