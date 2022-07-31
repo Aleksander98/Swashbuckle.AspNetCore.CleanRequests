@@ -32,5 +32,28 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Extensions
 
             return options;
         }
+
+        /// <summary>
+        /// Exclude body properties that are already defined for e.g. in path.
+        /// Use <paramref name="parameterLocations"/> to define where to look for duplicates.
+        /// </summary>
+        /// <param name="options"><see cref="SwaggerGenOptions"/>.</param>
+        /// <param name="parameterLocations">
+        /// Locations to search for duplicates.
+        /// <see cref="ParameterLocation.Path"/> is the default.
+        /// </param>
+        /// <returns></returns>
+        public static SwaggerGenOptions ExcludeDuplicatedBodyProperties(this SwaggerGenOptions options,
+            params ParameterLocation[] parameterLocations)
+        {
+            if (parameterLocations.Length == 0)
+            {
+                parameterLocations = new[] { ParameterLocation.Path };
+            }
+
+            options.OperationFilter<ExcludeDuplicatedBodyPropertiesFilter>(parameterLocations);
+
+            return options;
+        }
     }
 }
