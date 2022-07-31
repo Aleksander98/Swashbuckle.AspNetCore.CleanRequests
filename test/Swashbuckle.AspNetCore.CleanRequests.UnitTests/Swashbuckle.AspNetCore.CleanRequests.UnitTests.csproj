@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Swashbuckle.AspNetCore.CleanRequests\Swashbuckle.AspNetCore.CleanRequests.csproj" />
+  </ItemGroup>
+
 </Project>
