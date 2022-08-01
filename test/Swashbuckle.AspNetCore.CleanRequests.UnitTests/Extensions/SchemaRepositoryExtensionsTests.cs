@@ -7,21 +7,21 @@ namespace Swashbuckle.AspNetCore.CleanRequests.UnitTests.Extensions;
 public class SchemaRepositoryExtensionsTests
 {
     [Fact]
-    public void ShouldReturnSchemaWithKey()
+    public void ShouldReturnSchemaWithType()
     {
         // Arrange
-        const string key = "Key";
-        var schemaRepository = new SchemaRepository
-        {
-            Schemas =
-            {
-                { key, new OpenApiSchema() },
-                { "OtherKey", new OpenApiSchema() }
-            }
-        };
+        var schemaRepository = new SchemaRepository();
+
+        var type = typeof(SchemaRepositoryExtensionsTests);
+        schemaRepository.RegisterType(type, type.Name);
+        schemaRepository.AddDefinition(type.Name, new OpenApiSchema());
+
+        var otherType = typeof(SchemaRepositoryExtensions);
+        schemaRepository.RegisterType(otherType, otherType.Name);
+        schemaRepository.AddDefinition(otherType.Name, new OpenApiSchema());
 
         // Act
-        var result = schemaRepository.TryGetByName(key, out var schema);
+        var result = schemaRepository.TryGetByType(type, out var schema);
 
         // Assert
         result.ShouldBeTrue();
@@ -29,20 +29,35 @@ public class SchemaRepositoryExtensionsTests
     }
 
     [Fact]
-    public void ShouldReturnNullWhenSchemaWithKeyDoesNotExist()
+    public void ShouldReturnNullWhenSchemaWithTypeDoesNotExist()
     {
         // Arrange
-        const string key = "Key";
-        var schemaRepository = new SchemaRepository
-        {
-            Schemas =
-            {
-                { "OtherKey", new OpenApiSchema() }
-            }
-        };
+        var schemaRepository = new SchemaRepository();
+
+        var type = typeof(SchemaRepositoryExtensionsTests);
+        var otherType = typeof(SchemaRepositoryExtensions);
+        schemaRepository.RegisterType(otherType, otherType.Name);
+        schemaRepository.AddDefinition(otherType.Name, new OpenApiSchema());
 
         // Act
-        var result = schemaRepository.TryGetByName(key, out var schema);
+        var result = schemaRepository.TryGetByType(type, out var schema);
+
+        // Assert
+        result.ShouldBeFalse();
+        schema.ShouldBeNull();
+    }
+
+    [Fact]
+    public void ShouldReturnNullWhenSchemaWithTypeExistsWithoutTheDefinition()
+    {
+        // Arrange
+        var schemaRepository = new SchemaRepository();
+
+        var type = typeof(SchemaRepositoryExtensionsTests);
+        schemaRepository.RegisterType(type, type.Name);
+
+        // Act
+        var result = schemaRepository.TryGetByType(type, out var schema);
 
         // Assert
         result.ShouldBeFalse();
