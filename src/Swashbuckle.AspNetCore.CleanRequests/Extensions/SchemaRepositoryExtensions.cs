@@ -1,27 +1,25 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Linq;
+using System;
 
 namespace Swashbuckle.AspNetCore.CleanRequests.Extensions
 {
     internal static class SchemaRepositoryExtensions
     {
-        internal static bool TryGetByName(this SchemaRepository schemaRepository, 
-            string name, out OpenApiSchema schemas)
+        internal static bool TryGetByType(this SchemaRepository schemaRepository,
+            Type type, out OpenApiSchema schema)
         {
-            if (!schemaRepository.Schemas.ContainsKey(name))
+            // Check if that type exists in SchemaRepository
+            if (schemaRepository.TryLookupByType(type, out var schemaLookup))
             {
-                schemas = null;
-
-                return false;
+                // Get the actual schema if exists.
+                if (schemaRepository.Schemas.TryGetValue(schemaLookup.Reference.Id, out schema))
+                {
+                    return true;
+                }
             }
 
-            schemas = schemaRepository.Schemas
-                .Where(schema => schema.Key.Equals(name))
-                .Select(schema => schema.Value)
-                .FirstOrDefault();
-
-            return true;
+            schema = null; return false;
         }
     }
 }

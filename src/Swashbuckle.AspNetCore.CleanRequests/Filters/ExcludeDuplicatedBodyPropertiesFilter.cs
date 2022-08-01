@@ -37,9 +37,7 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Filters
 
             foreach (var fromBodyParameter in fromBodyParameters)
             {
-                var schemaName = fromBodyParameter.ParameterType.Name;
-
-                if (context.SchemaRepository.TryGetByName(schemaName, out var schema))
+                if (context.SchemaRepository.TryGetByType(fromBodyParameter.ParameterType, out var schema))
                 {
                     schema.RemoveMatchingProperties(parameters);
                 }
