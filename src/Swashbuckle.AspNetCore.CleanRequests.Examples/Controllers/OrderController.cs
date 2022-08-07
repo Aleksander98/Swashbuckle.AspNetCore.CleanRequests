@@ -20,11 +20,23 @@ public class OrderController : ControllerBase
         return Ok(new GetOrderItemsResponse());
     }
 
-    [HttpPost("{orderID:int}/items")]
+    [HttpPost("{orderId:int}/items")]
     public ActionResult<int> CreateOrderItem(int orderId,
         [FromBody] CreateOrderItemRequest request)
     {
         request.OrderId = orderId;
+
+        // ...
+
+        return Ok(1);
+    }
+
+    [HttpPut("{orderId:int}/items/{itemId:int}")]
+    public ActionResult<int> UpdateOrderItem(int orderId, int itemId,
+        [FromBody] UpdateOrderItemRequest request)
+    {
+        request.OrderId = orderId;
+        request.ItemId = itemId;
 
         // ...
 
