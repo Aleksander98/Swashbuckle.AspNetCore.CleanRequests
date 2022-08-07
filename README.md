@@ -1,5 +1,7 @@
 # Swashbuckle.AspNetCore.CleanRequests
 
+[![Nuget](https://img.shields.io/nuget/v/swashbuckle.aspnetcore.cleanrequests)](https://www.nuget.org/packages/Swashbuckle.AspNetCore.CleanRequests)
+
 A library with additional filters for Swashbuckle.AspNetCore to exclude duplicated information from schema.
 
 ## Introduction
