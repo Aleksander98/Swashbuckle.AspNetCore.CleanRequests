@@ -10,7 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    //options.CustomSchemaIds(selector => selector.FullName);
     options.ExcludeDuplicatedBodyProperties(ParameterLocation.Path);
     options.ExcludeDuplicatedQueryParameters(ParameterLocation.Path);
 });
