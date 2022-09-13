@@ -9,7 +9,7 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Filters
     /// <summary>
     /// Operation filter to exclude query parameters that are already defined for e.g. in path.
     /// </summary>
-    public class ExcludeDuplicatedQueryParametersFilter : IOperationFilter
+    public sealed class ExcludeDuplicatedQueryParametersFilter : IOperationFilter
     {
         private readonly ParameterLocation[] _parameterLocations;
 

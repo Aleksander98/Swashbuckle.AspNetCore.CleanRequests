@@ -11,7 +11,7 @@ namespace Swashbuckle.AspNetCore.CleanRequests.Filters
     /// <summary>
     /// Operation filter to exclude body properties that are already defined for e.g. in path.
     /// </summary>
-    public class ExcludeDuplicatedBodyPropertiesFilter : IOperationFilter
+    public sealed class ExcludeDuplicatedBodyPropertiesFilter : IOperationFilter
     {
         private readonly ParameterLocation[] _parameterLocations;
 
