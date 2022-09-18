@@ -12,8 +12,8 @@
 		<PackageProjectUrl>https://github.com/Aleksander98/Swashbuckle.AspNetCore.CleanRequests</PackageProjectUrl>
 		<PackageTags>Swagger;Swashbuckle;Filters;Exclude;CleanRequests</PackageTags>
 		<PackageReadmeFile>README.nuget.md</PackageReadmeFile>
-		<Version>1.0.0</Version>
-		<FileVersion>1.0.0.0</FileVersion>
+		<Version>1.0.1</Version>
+		<FileVersion>1.0.1.0</FileVersion>
 		<PackageId>Swashbuckle.AspNetCore.CleanRequests</PackageId>
 		<Product>Swashbuckle.AspNetCore.CleanRequests</Product>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
